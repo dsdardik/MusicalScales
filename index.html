@@ -4,14 +4,21 @@
 	</head>
 	<body>
 		<div id="app">
-			<h2> Hello, {{ message }}</h2>
+			<h2> Message: {{ titleMessage() }}</h2>
 		</div>
+		<script type="text/javascript" src="scales.js"></script>
 		<script type="text/javascript">
+		
 			var vue  = new Vue({
 				el: '#app',
-				data: {message: 'First Vue app'}
-
-
+				data: {
+					message: 'First Vue app'
+				},
+				methods: {
+					titleMessage : function(){
+						return "Hello " + this.message;
+					}
+				}
 			});
 
 
