@@ -3,11 +3,12 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 	</head>
 	<body>
-		<div id="vue_det">
+		<div id="app">
 			<h2> Hello, {{ message }}</h2>
 		</div>
 		<script type="text/javascript">
 			var vue  = new Vue({
+				el: '#app',
 				data: {message: 'First Vue app'}
 
 
