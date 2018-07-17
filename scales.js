@@ -1,11 +1,9 @@
 class Note {
 	
-	constructor(name){
+	constructor(name, chordDegree, scaleDegree){
 		this.name = name;
-	}
-	
-	val(){
-		return this.name;
+		this.chordDegree = chordDegree;
+		this.scaleDegree = scaleDegree;
 	}
 	
 	toString(){
@@ -15,16 +13,14 @@ class Note {
 
 class Scale {
 	
-	constructor(name){
-		this.name = name;
-		this.scale = '';
+	constructor(letter, type){
+		this.name = letter + type;
+		this.letter = letter;
+		this.type = type;
+		this.scale = [];
 	}
 	
-	getName(){
-		return this.name;
-	}
-	
-	getScale(){
+	toString(){
 		return this.scale.toString();
 	}
 }
@@ -37,35 +33,35 @@ class ScaleType {
 			sharps: ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'],
 			flats:  ['A','Bb','B','C','Db','D','Eb','E','F','Gb','G','Ab']
 		};
-		this.sequence = {
-			major: [2,2,1,2,2,2,1],
-			minor: [2,1,2,2,2,1,2]
+		this.scale = {
+			major: { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
+			minor: { sequence : [2,1,2,2,2,1,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
 		}
-		this.chordDegree = ('maj','min','min','maj','dom','min','dim');
 		
 		return this.generateScale(letter, sharps, type);
 	}
 	
 	generateScale(letter, sharps, type){
-		var scale = new Scale(letter + type)
-		var seq = this.sequence[type];
-		var letters, i, letterIndex;
+		var scale = new Scale(letter, type)
+		var seq = this.scale[type].sequence;
+		var chordDegree = this.scale[type].chordDegree;
+		var letters, letterIndex;
 		if(sharps){
 			letters = this.letters.sharps;
 		}else{
 			letters = this.letters.flats;
 		}
 		
-		i = 0;
+		var i = 0;
 		while(letters[i] != letter && i < letters.length){
 			i++;
 		}
 		letterIndex = i;
-		var note = new Note(letter);
-		scale[0] = note;
+		var note = new Note(letter,chordDegree[0],this.getScaleDegree(0));
+		scale.scale[0] = note;
 		
 		for(i = 0; i < seq.length; i++){
-			scale[i] = letters[letterIndex];
+			scale.scale[i] = new Note(letters[letterIndex],chordDegree[i],this.getScaleDegree(i));
 			letterIndex += seq[i];
 			if(letterIndex > 11){
 				letterIndex -= 12;
@@ -73,5 +69,33 @@ class ScaleType {
 		}
 				
 		return scale;
+	}
+	
+	getScaleDegree(index){
+		var degree = "";
+		switch(index){
+			case 0:
+				degree = "root";
+				break;
+			case 1:
+				degree = "2nd";
+				break;
+			case 2:
+				degree = "3rd";
+				break;
+			case 3:
+				degree = "4th";
+				break;
+			case 4:
+				degree = "5th";
+				break;
+			case 5:
+				degree = "6th";
+				break;
+			case 6:
+				degree = "7th";
+				break;
+		}
+		return degree;
 	}
 }
