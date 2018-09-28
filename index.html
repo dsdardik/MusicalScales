@@ -5,6 +5,12 @@
 	<body>
 		<div id="app">
 			<h2> Message: {{ titleMessage() }}</h2>
+			
+			<my-comp>
+			</my-comp>
+			<dropdown value="A">
+			</dropdown>
+
 		</div>
 		<script type="text/javascript" src="scales.js"></script>
 		<script type="text/javascript">
@@ -12,14 +18,36 @@
 			var vue  = new Vue({
 				el: '#app',
 				data: {
-					message: 'First Vue app'
+					message: 'First Vue app',
+					htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>'
 				},
 				methods: {
 					titleMessage : function(){
 						return "Hello " + this.message;
 					}
+				},
+				components: {
+					'dropdown' : {
+						props: ['value'],
+						template:  `<div>
+										<p>Scale:</p>
+										<select>
+											<option value="">Select</option>
+											<option :value="value">{{value}}</option>
+										</select>
+									</div>`
+					},
+					'my-comp' : {
+						data: function(){
+							return {
+								count: 0
+							}
+						},
+						template: `<button v-on:click="count++">You clicked me {{ count }} times.</button>`
+					}
 				}
 			});
+			
 
 
 

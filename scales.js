@@ -25,9 +25,9 @@ class Scale {
 	}
 }
 
-class ScaleType {
+class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(letter, type, sharps);
 	
-	constructor(letter, type, sharps = true){
+	constructor(){
 		
 		this.letters = {
 			sharps: ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'],
@@ -38,10 +38,10 @@ class ScaleType {
 			minor: { sequence : [2,1,2,2,2,1,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
 		}
 		
-		return this.generateScale(letter, sharps, type);
+		//return this;
 	}
 	
-	generateScale(letter, sharps, type){
+	generateScale(letter, type, sharps = true){
 		var scale = new Scale(letter, type)
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
