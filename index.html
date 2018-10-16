@@ -6,20 +6,38 @@
 		<div id="app">
 			<h2> Message: {{ titleMessage() }}</h2>
 			
-			<my-comp>
+			<my-comp style="display: none;">
 			</my-comp>
-			<dropdown value="A">
-			</dropdown>
+			<select id="letter">
+				<option v-for="letter in letterList">
+					{{ letter }}
+				</option>
+			</select>
+			<select id="scaleType">
+				<option v-for="scaleType in scaleList">
+					{{ scaleType }}
+				</option>
+			</select>
+			
+			<div id="scaleDisplay">
+			</div>
 
 		</div>
 		<script type="text/javascript" src="scales.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+				integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+				crossorigin="anonymous">
+		</script>
 		<script type="text/javascript">
 		
+			var scaleType = new ScaleType();
 			var vue  = new Vue({
 				el: '#app',
 				data: {
 					message: 'First Vue app',
-					htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>'
+					htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>',
+					letterList: scaleType.letters.sharps,
+					scaleList: Object.keys(scaleType.scale)
 				},
 				methods: {
 					titleMessage : function(){
@@ -49,7 +67,24 @@
 			});
 			
 
-
+			$(function(){
+				setScale();
+				$("#letter").on('change', setScale);
+				$("#scaleType").on('change', setScale);
+			});
+			
+			
+			function setScale(){
+					var letter = $("#letter").val();
+					var scaleTypeVal = $("#scaleType").val();
+					console.log("letter: " + letter);
+					console.log("scaleType: " + scaleTypeVal);
+					scale = scaleType.generateScale(letter, scaleTypeVal);
+					var html = "<p>"+scale.toString()+"</p>";
+					console.log(html);
+					$("#scaleDisplay").html(html);
+				}
+			
 
 
 		</script>
