@@ -35,22 +35,18 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		};
 		this.scale = {
 			major: { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
-			minor: { sequence : [2,1,2,2,2,1,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
+			minor: { sequence : [2,1,2,2,1,2,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
 		}
 		
 		//return this;
 	}
 	
-	generateScale(letter, type, sharps = true){
+	generateScale(letter, type, keySignature){
 		var scale = new Scale(letter, type)
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
-		var letters, letterIndex;
-		if(sharps){
-			letters = this.letters.sharps;
-		}else{
-			letters = this.letters.flats;
-		}
+		var letters = this.letters[keySignature];
+		var letterIndex;
 		
 		var i = 0;
 		while(letters[i] != letter && i < letters.length){

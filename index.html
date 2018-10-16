@@ -18,7 +18,11 @@
 					{{ scaleType }}
 				</option>
 			</select>
-			
+			<select id="keySignature">
+				<option v-for="keySignature in keySignatureList">
+					{{ keySignature }}
+				</option>
+			</select>
 			<div id="scaleDisplay">
 			</div>
 
@@ -37,7 +41,8 @@
 					message: 'First Vue app',
 					htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>',
 					letterList: scaleType.letters.sharps,
-					scaleList: Object.keys(scaleType.scale)
+					scaleList: Object.keys(scaleType.scale),
+					keySignatureList: Object.keys(scaleType.letters)
 				},
 				methods: {
 					titleMessage : function(){
@@ -71,15 +76,18 @@
 				setScale();
 				$("#letter").on('change', setScale);
 				$("#scaleType").on('change', setScale);
+				$("#keySignature").on('change', setScale);
 			});
 			
 			
 			function setScale(){
 					var letter = $("#letter").val();
 					var scaleTypeVal = $("#scaleType").val();
+					var keySignatureVal = $("#keySignature").val();
 					console.log("letter: " + letter);
 					console.log("scaleType: " + scaleTypeVal);
-					scale = scaleType.generateScale(letter, scaleTypeVal);
+					console.log("keySignature: " + keySignatureVal);
+					scale = scaleType.generateScale(letter, scaleTypeVal, keySignatureVal);
 					var html = "<p>"+scale.toString()+"</p>";
 					console.log(html);
 					$("#scaleDisplay").html(html);
