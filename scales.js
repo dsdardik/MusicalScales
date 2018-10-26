@@ -20,6 +20,14 @@ class Scale {
 		this.scale = [];
 	}
 	
+	hasNote(letter){ // returns Note object if true, else returns null
+		for(var i = 0; i < this.scale.length; i++){
+			if(this.scale[i] == letter){ // might change this to an object
+				return this.scale[i];
+			}
+		}
+	}
+	
 	toString(){
 		return this.scale.toString();
 	}
@@ -31,6 +39,10 @@ class Guitar {
 		this.scale = scale;
 		this.tune = tune;
 		this.board = [];
+	}
+	
+	numStrings(){
+		return this.tune.length;
 	}
 }
 
@@ -53,7 +65,7 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 	}
 	
 	generateScale(letter, type, keySignature){
-		var scale = new Scale(letter, type)
+		var scale = new Scale(letter, type) // eventually change to an array of scales if multiple provided
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
 		var letters = this.letters[keySignature];
@@ -68,21 +80,20 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		scale.scale[0] = note;
 		
 		for(i = 0; i < seq.length; i++){
-			scale.scale[i] = new Note(letters[letterIndex],chordDegree[i],this.getScaleDegree(i));
+			scale.scale[i] = new Note(letters[letterIndex],chordDegree[i],this.getScaleDegree(i)); // consider making note generator method
 			letterIndex += seq[i];
-			if(letterIndex > 11){
-				letterIndex -= 12;
+			if(letterIndex = letters.length){
+				letterIndex = 0;
 			}
 		}
-				
 		return scale;
 	}
 	
 	generateFretboard(scale, tune){
 		var guitar = new Guitar(scale, this.tuning[tune])
-		var scale = new Scale(letter, type)
-		var seq = this.scale[type].sequence;
-		var chordDegree = this.scale[type].chordDegree;
+		//var scale = new Scale(letter, type)
+		//var seq = this.scale[type].sequence;
+		//var chordDegree = this.scale[type].chordDegree;
 		var letters = this.letters[keySignature];
 		var letterIndex;
 		
@@ -95,18 +106,23 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		var note = new Note(letter,chordDegree[0],this.getScaleDegree(0));
 		scale.scale[0] = note;
 		
-		for(i = 0; i < seq.length; i++){
-			scale.scale[i] = new Note(letters[letterIndex],chordDegree[i],this.getScaleDegree(i));
-			letterIndex += seq[i];
-			if(letterIndex > 11){
-				letterIndex -= 12;
+		for(i = 0; i < letters.length; i++){
+			letter = letters[letterIndex];
+			note = scale.hasNote(letter);
+			if(!note){ // letter is in scale
+				note = new Note(letters[letterIndex],null,null);
+			}
+			scale.scale[i] = note
+			letterIndex ++;
+			if(letterIndex = letters.length){
+				letterIndex = 0;
 			}
 		}
 				
-		return scale;
+		return guitar;
 	}
 	
-	getScaleDegree(index){
+	getScaleDegree(index){ // consider turning this into generator method for Note objects
 		var degree = "";
 		switch(index){
 			case 0:
