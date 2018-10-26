@@ -48,7 +48,7 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		}
 		this.tuning = {
 			standard: ['E','A','D','G','B','E'],
-			drop-d:   ['D','A','D','G','B','E']
+			drop_d:   ['D','A','D','G','B','E']
 		}
 	}
 	
