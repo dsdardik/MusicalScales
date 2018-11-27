@@ -64,27 +64,46 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		}
 	}
 	
-	generateScale(letter, type, keySignature){
+	generateScale(letter, type, keySignature, includeAllNotes=false){
 		var scale = new Scale(letter, type) // eventually change to an array of scales if multiple provided
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
 		var letters = this.letters[keySignature];
-		var letterIndex;
+		var scaleLength;
 		
 		var i = 0;
-		while(letters[i] != letter && i < letters.length){ // find the letter's index in the array
+		while(letters[i] != letter && i < letters.length){ // find the starting letter's index in the array
 			i++;
 		}
-		letterIndex = i;
-		var note = new Note(letter,chordDegree[0],this.getScaleDegree(0));
+		var letterIndex = i;
+		var scaleIndex  = i;
+		
+		var note = new Note(letter, chordDegree[0], this.getScaleDegree(0));
 		scale.scale[0] = note;
 		
-		for(i = 0; i < seq.length; i++){
-			scale.scale[i] = new Note(letters[letterIndex],chordDegree[i],this.getScaleDegree(i)); // consider making note generator method
-			letterIndex += seq[i];
-			if(letterIndex = letters.length){
-				letterIndex = 0;
+		if(includeAllNotes){
+			scaleLength = letters.length;
+		}else{
+			scaleLength = seq.length;
+		}
+		
+		for(i = 0; i < scaleLength; i++){
+			
+			if(includeAllNotes && i != scaleIndex){
+				note = new Note(letters[letterIndex], null, null);
+				letterIndex ++;
+				if(letterIndex == letters.length){
+					letterIndex = 0;
+				}
+			}else{
+				console.log('Test: ' + scaleIndex);
+				note = new Note(letters[scaleIndex], chordDegree[i], this.getScaleDegree(i)); // consider making note generator method;
+				scaleIndex += seq[i];
+				if(scaleIndex == letters.length){
+					scaleIndex = 0;
+				}
 			}
+			scale.scale[i] = note;
 		}
 		return scale;
 	}
@@ -103,14 +122,14 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 			i++;
 		}
 		letterIndex = i;
-		var note = new Note(letter,chordDegree[0],this.getScaleDegree(0));
+		var note = new Note(letter, chordDegree[0], this.getScaleDegree(0));
 		scale.scale[0] = note;
 		
 		for(i = 0; i < letters.length; i++){
 			letter = letters[letterIndex];
 			note = scale.hasNote(letter);
 			if(!note){ // letter is in scale
-				note = new Note(letters[letterIndex],null,null);
+				note = new Note(letters[letterIndex], null, null);
 			}
 			scale.scale[i] = note
 			letterIndex ++;
