@@ -13,10 +13,11 @@ class Note {
 
 class Scale {
 	
-	constructor(letter, type){
+	constructor(letter, type, letters){
 		this.name = letter + type;
 		this.letter = letter;
 		this.type = type;
+		this.letters = letters;
 		this.scale = [];
 	}
 	
@@ -64,48 +65,58 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		}
 	}
 	
-	generateScale(letter, type, keySignature, includeAllNotes=false){
-		var scale = new Scale(letter, type) // eventually change to an array of scales if multiple provided
+	generateScale(letter, type, keySignature){
+		var letters = this.letters[keySignature];
+		var scale = new Scale(letter, type, letters) // eventually change to an array of scales if multiple provided
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
-		var letters = this.letters[keySignature];
 		var scaleLength;
 		
 		var i = 0;
 		while(letters[i] != letter && i < letters.length){ // find the starting letter's index in the array
 			i++;
 		}
-		var letterIndex = i;
-		var scaleIndex  = i;
+		var letterIndex = i; // index for array with all letters
+		var scaleIndex  = i; // index for array with notes from scale only
 		
-		var note = new Note(letter, chordDegree[0], this.getScaleDegree(0));
-		scale.scale[0] = note;
+		var note;// = new Note(letter, chordDegree[0], this.getScaleDegree(0));
+		//scale.scale[0] = note;
 		
-		if(includeAllNotes){
-			scaleLength = letters.length;
-		}else{
-			scaleLength = seq.length;
-		}
 		
-		for(i = 0; i < scaleLength; i++){
+		for(i = 0; i < seq.length; i++){
 			
-			if(includeAllNotes && i != scaleIndex){
-				note = new Note(letters[letterIndex], null, null);
-				letterIndex ++;
-				if(letterIndex == letters.length){
-					letterIndex = 0;
-				}
-			}else{
-				console.log('Test: ' + scaleIndex);
-				note = new Note(letters[scaleIndex], chordDegree[i], this.getScaleDegree(i)); // consider making note generator method;
-				scaleIndex += seq[i];
-				if(scaleIndex == letters.length){
-					scaleIndex = 0;
-				}
+			//note = new Note(letters[scaleIndex], chordDegree[i], this.getScaleDegree(i)); // consider making note generator method;
+			note = new Note(letters[scaleIndex], 'test', 'test'); // consider making note generator method;
+			scaleIndex += seq[i];
+			if(scaleIndex >= letters.length){
+				scaleIndex -= letters.length;
 			}
 			scale.scale[i] = note;
 		}
 		return scale;
+	}
+	
+	generateString(startLetter, scale, stringLen = null){
+		var letters = scale.letters;
+		if(stringLen == null){
+			stringLen = letters.length;
+		}
+		var string = [];
+		var note;
+		var i = 0;
+		while(letters[i] != startLetter && i < letters.length){ // find the starting letter's index in the array
+			i++;
+		}
+		
+		for(var i = 0; i < letters.length; i++){
+			//note = new Note(letters[i], scale.getDegree(), scale.get...);
+			if(scale.hasNote(letters[i])){
+				note = new Note(letters[i], 'Test', 'Test');
+			}else{
+				note = new Note(letters[i], null, null);
+			}
+			string[]
+		}
 	}
 	
 	generateFretboard(scale, tune){
@@ -116,8 +127,13 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		var letters = this.letters[keySignature];
 		var letterIndex;
 		
-		// letter = first letter of curr guitar string
 		var i = 0;
+		for(i = 0; i < tune.length; i++){
+			console.log(tune[i]);
+		}
+		
+		/*
+		// letter = first letter of curr guitar string
 		while(letters[i] != letter && i < letters.length){ // find the letter's index in the array
 			i++;
 		}
@@ -138,10 +154,11 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 			}
 		}
 				
+				*/
 		return guitar;
 	}
 	
-	getScaleDegree(index){ // consider turning this into generator method for Note objects
+	getScaleDegree(index){ // move to Note class
 		var degree = "";
 		switch(index){
 			case 0:
