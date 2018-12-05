@@ -84,13 +84,30 @@
 					var letter = $("#letter").val();
 					var scaleTypeVal = $("#scaleType").val();
 					var keySignatureVal = $("#keySignature").val();
-					console.log("letter: " + letter);
-					console.log("scaleType: " + scaleTypeVal);
-					console.log("keySignature: " + keySignatureVal);
+					console.log(letter + " " + scaleTypeVal + ", " + keySignatureVal);
 					scale = scaleType.generateScale(letter, scaleTypeVal, keySignatureVal);
+					var guitar = scaleType.generateFretboard(scale, 'standard');
+					var board = guitar.board;
+					
 					var html = "<p>"+scale.toString()+"</p>";
-					console.log(html);
+					html += "<br /><br />";
+					html += "<table border='1'>";
+					for(var i = board.length - 1; i >= 0 ; i--){
+						html += "<tr>";
+						str = board[i];
+						for(var j = 0; j < str.length; j++){
+							var note = str[j];
+							var attr = "";
+							if(note.chordDegree != null){
+								attr = "class='inScale'"; // add attr's too note class
+							}
+							html += "<td "+attr+">"+note+"<td/>";
+						}
+						html += "<tr/>";
+					}
+					html += "<table/>";
 					$("#scaleDisplay").html(html);
+					$(".inScale").css('background-color','red');
 				}
 			
 

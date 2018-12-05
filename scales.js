@@ -23,7 +23,7 @@ class Scale {
 	
 	hasNote(letter){ // returns Note object if true, else returns null
 		for(var i = 0; i < this.scale.length; i++){
-			if(this.scale[i] == letter){ // might change this to an object
+			if(this.scale[i].toString() == letter){
 				return this.scale[i];
 			}
 		}
@@ -36,10 +36,10 @@ class Scale {
 
 class Guitar {
 	
-	constructor(scale, tune){
+	constructor(scale, tune, board){
 		this.scale = scale;
 		this.tune = tune;
-		this.board = [];
+		this.board = board;
 	}
 	
 	numStrings(){
@@ -72,90 +72,49 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		var chordDegree = this.scale[type].chordDegree;
 		var scaleLength;
 		
-		var i = 0;
+		var i = 0; // index for array with notes from scale only
 		while(letters[i] != letter && i < letters.length){ // find the starting letter's index in the array
 			i++;
 		}
-		var letterIndex = i; // index for array with all letters
-		var scaleIndex  = i; // index for array with notes from scale only
 		
-		var note;// = new Note(letter, chordDegree[0], this.getScaleDegree(0));
-		//scale.scale[0] = note;
-		
-		
-		for(i = 0; i < seq.length; i++){
-			
-			//note = new Note(letters[scaleIndex], chordDegree[i], this.getScaleDegree(i)); // consider making note generator method;
-			note = new Note(letters[scaleIndex], 'test', 'test'); // consider making note generator method;
-			scaleIndex += seq[i];
-			if(scaleIndex >= letters.length){
-				scaleIndex -= letters.length;
-			}
-			scale.scale[i] = note;
+		for(var j = 0; j < seq.length; j++){
+
+			scale.scale[j] = new Note(letters[i], 'test', 'test'); // consider making note generator method;;
+			i = ( i + seq[j] ) % letters.length; // incrementing by the sequence and looping back to 0
 		}
 		return scale;
 	}
 	
-	generateString(startLetter, scale, stringLen = null){
+	generateString(startLetter, scale){ // consider adding stringLen for longer fretboards
 		var letters = scale.letters;
-		if(stringLen == null){
-			stringLen = letters.length;
-		}
 		var string = [];
-		var note;
 		var i = 0;
 		while(letters[i] != startLetter && i < letters.length){ // find the starting letter's index in the array
 			i++;
 		}
 		
-		for(var i = 0; i < letters.length; i++){
-			//note = new Note(letters[i], scale.getDegree(), scale.get...);
+		for(var j = 0; j <= letters.length; j++){
+			var scaleDegree = null;
+			var degree = null;
 			if(scale.hasNote(letters[i])){
-				note = new Note(letters[i], 'Test', 'Test');
-			}else{
-				note = new Note(letters[i], null, null);
+				scaleDegree = 'Test';
+				degree = 'Test';
 			}
-			string[]
+			string[j] = new Note(letters[i], scaleDegree, degree);
+			i = (i+1) % letters.length; // incrementing by one and looping back to 0
 		}
+		return string;
 	}
 	
-	generateFretboard(scale, tune){
-		var guitar = new Guitar(scale, this.tuning[tune])
-		//var scale = new Scale(letter, type)
-		//var seq = this.scale[type].sequence;
-		//var chordDegree = this.scale[type].chordDegree;
+	generateFretboard(scale, tuneName){
+		var tune = this.tuning[tuneName];
 		var letters = this.letters[keySignature];
-		var letterIndex;
+		var board = [];
 		
-		var i = 0;
-		for(i = 0; i < tune.length; i++){
-			console.log(tune[i]);
+		for(var i = 0; i < tune.length; i++){
+			board[i] = scaleType.generateString(tune[i], scale);
 		}
-		
-		/*
-		// letter = first letter of curr guitar string
-		while(letters[i] != letter && i < letters.length){ // find the letter's index in the array
-			i++;
-		}
-		letterIndex = i;
-		var note = new Note(letter, chordDegree[0], this.getScaleDegree(0));
-		scale.scale[0] = note;
-		
-		for(i = 0; i < letters.length; i++){
-			letter = letters[letterIndex];
-			note = scale.hasNote(letter);
-			if(!note){ // letter is in scale
-				note = new Note(letters[letterIndex], null, null);
-			}
-			scale.scale[i] = note
-			letterIndex ++;
-			if(letterIndex = letters.length){
-				letterIndex = 0;
-			}
-		}
-				
-				*/
-		return guitar;
+		return new Guitar(scale, this.tuning[tune], board);
 	}
 	
 	getScaleDegree(index){ // move to Note class
