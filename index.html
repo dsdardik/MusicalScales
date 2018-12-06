@@ -98,8 +98,8 @@
 						for(var j = 0; j < str.length; j++){
 							var note = str[j];
 							var attr = "";
-							if(note.chordDegree != null){
-								attr = "class='inScale'"; // add attr's too note class
+							if(scale.hasNote(note.name)){
+								attr = "class='inScale " + note.scaleDegree + "'"; // add attr's too note class
 							}
 							html += "<td "+attr+">"+note+"<td/>";
 						}
@@ -107,7 +107,10 @@
 					}
 					html += "<table/>";
 					$("#scaleDisplay").html(html);
-					$(".inScale").css('background-color','red');
+					$(".inScale").css('color','white');
+					$(".inScale").css('background-color','blue');
+					$(".5th").css('background-color','#aa00aa');
+					$(".root").css('background-color','red');
 				}
 			
 

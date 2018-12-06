@@ -1,9 +1,41 @@
 class Note {
 	
-	constructor(name, chordDegree, scaleDegree){
+	constructor(name, scaleIndex, chordDegree){
 		this.name = name;
 		this.chordDegree = chordDegree;
-		this.scaleDegree = scaleDegree;
+		
+		var degree;
+		switch(scaleIndex){
+			case -1:
+				degree = "not_inscale";
+				break;
+			case 0:
+				degree = "root";
+				break;
+			case 1:
+				degree = "2nd";
+				break;
+			case 2:
+				degree = "3rd";
+				break;
+			case 3:
+				degree = "4th";
+				break;
+			case 4:
+				degree = "5th";
+				break;
+			case 5:
+				degree = "6th";
+				break;
+			case 6:
+				degree = "7th";
+				break;
+		}
+		this.scaleDegree = degree;
+	}
+	
+	inScale(){
+		return this.chordDegree != "not_inscale";
 	}
 	
 	toString(){
@@ -21,12 +53,22 @@ class Scale {
 		this.scale = [];
 	}
 	
-	hasNote(letter){ // returns Note object if true, else returns null
+	getNote(letter){ // returns Note object if in scale, else returns new Note with not_inscale attribute
 		for(var i = 0; i < this.scale.length; i++){
 			if(this.scale[i].toString() == letter){
 				return this.scale[i];
 			}
 		}
+		return new Note(letter, -1, null);
+	}
+	
+	hasNote(letter){
+		for(var i = 0; i < this.scale.length; i++){
+			if(this.scale[i].toString() == letter){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	toString(){
@@ -79,7 +121,7 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		
 		for(var j = 0; j < seq.length; j++){
 
-			scale.scale[j] = new Note(letters[i], 'test', 'test'); // consider making note generator method;;
+			scale.scale[j] = new Note(letters[i], j, chordDegree[j]); // consider making note generator method
 			i = ( i + seq[j] ) % letters.length; // incrementing by the sequence and looping back to 0
 		}
 		return scale;
@@ -94,6 +136,7 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		}
 		
 		for(var j = 0; j <= letters.length; j++){
+			/*
 			var scaleDegree = null;
 			var degree = null;
 			if(scale.hasNote(letters[i])){
@@ -101,6 +144,8 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 				degree = 'Test';
 			}
 			string[j] = new Note(letters[i], scaleDegree, degree);
+			*/
+			string[j] = scale.getNote(letters[i]);
 			i = (i+1) % letters.length; // incrementing by one and looping back to 0
 		}
 		return string;
@@ -117,31 +162,4 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		return new Guitar(scale, this.tuning[tune], board);
 	}
 	
-	getScaleDegree(index){ // move to Note class
-		var degree = "";
-		switch(index){
-			case 0:
-				degree = "root";
-				break;
-			case 1:
-				degree = "2nd";
-				break;
-			case 2:
-				degree = "3rd";
-				break;
-			case 3:
-				degree = "4th";
-				break;
-			case 4:
-				degree = "5th";
-				break;
-			case 5:
-				degree = "6th";
-				break;
-			case 6:
-				degree = "7th";
-				break;
-		}
-		return degree;
-	}
 }
