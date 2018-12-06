@@ -25,6 +25,8 @@
 			</select>
 			<div id="scaleDisplay">
 			</div>
+			<div id="legend">
+			</div>
 
 		</div>
 		<script type="text/javascript" src="scales.js"></script>
@@ -34,15 +36,15 @@
 		</script>
 		<script type="text/javascript">
 		
-			var scaleType = new ScaleType();
+			var scaleFactory = new ScaleFactory();
 			var vue  = new Vue({
 				el: '#app',
 				data: {
 					message: 'First Vue app',
 					htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>',
-					letterList: scaleType.letters.sharps,
-					scaleList: Object.keys(scaleType.scale),
-					keySignatureList: Object.keys(scaleType.letters)
+					letterList: scaleFactory.letters.sharps,
+					scaleList: Object.keys(scaleFactory.scale),
+					keySignatureList: Object.keys(scaleFactory.letters)
 				},
 				methods: {
 					titleMessage : function(){
@@ -85,8 +87,8 @@
 					var scaleTypeVal = $("#scaleType").val();
 					var keySignatureVal = $("#keySignature").val();
 					console.log(letter + " " + scaleTypeVal + ", " + keySignatureVal);
-					scale = scaleType.generateScale(letter, scaleTypeVal, keySignatureVal);
-					var guitar = scaleType.generateFretboard(scale, 'standard');
+					var scale = scaleFactory.generateScale(letter, scaleTypeVal, keySignatureVal);
+					var guitar = scaleFactory.generateFretboard(scale, 'standard');
 					var board = guitar.board;
 					
 					var html = "<p>"+scale.toString()+"</p>";
@@ -101,12 +103,25 @@
 							if(scale.hasNote(note.name)){
 								attr = "class='inScale " + note.scaleDegree + "'"; // add attr's too note class
 							}
-							html += "<td "+attr+">"+note+"<td/>";
+							html += "<td "+attr+">"+note+"</td>";
 						}
-						html += "<tr/>";
+						html += "</tr>";
 					}
-					html += "<table/>";
+					html += "</table>";
 					$("#scaleDisplay").html(html);
+					
+					var note;
+					var scaleDegrees = ['root', '5th'] // maybe change back to index
+					var html = "<br /><div><table border='1'><tr>";
+					for(var i = 0; i < scaleDegrees.length; i++){
+						note = scale.getNoteByDegree(scaleDegrees[i]);
+						//console.log(scale.scale); // I don't like these names
+						attr = "class='inScale " + note.scaleDegree + "'"; // add attr's too note class
+						html += "<td "+attr+">"+note+": "+note.scaleDegree+"</td>";
+					}
+					html += "</tr></table></div>";
+					$("#legend").html(html);
+					
 					$(".inScale").css('color','white');
 					$(".inScale").css('background-color','blue');
 					$(".5th").css('background-color','#aa00aa');

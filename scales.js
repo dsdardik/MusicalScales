@@ -62,6 +62,15 @@ class Scale {
 		return new Note(letter, -1, null);
 	}
 	
+	getNoteByDegree(degree){
+		for(var i = 0; i < this.scale.length; i++){
+			if(this.scale[i].scaleDegree == degree){
+				return this.scale[i];
+			}
+		}
+		return null;
+	}
+	
 	hasNote(letter){
 		for(var i = 0; i < this.scale.length; i++){
 			if(this.scale[i].toString() == letter){
@@ -89,7 +98,7 @@ class Guitar {
 	}
 }
 
-class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(letter, type, sharps);
+class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.generateScale(letter, type, sharps);
 	
 	constructor(){
 		
@@ -98,8 +107,10 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 			flats:  ['A','Bb','B','C','Db','D','Eb','E','F','Gb','G','Ab']
 		};
 		this.scale = {
-			major: { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
-			minor: { sequence : [2,1,2,2,1,2,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
+			major: 			  { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
+			major_pentatonic: { sequence : [2,2,3,2,3], 	chordDegree : ['maj','min','maj','dom','min'] },
+			minor: 			  { sequence : [2,1,2,2,1,2,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] },
+			minor_pentatonic: { sequence : [2,3,2,3,2], 	chordDegree : ['min','maj','min','maj','dom'] }
 		}
 		this.tuning = {
 			standard: ['E','A','D','G','B','E'],
@@ -122,7 +133,7 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		for(var j = 0; j < seq.length; j++){
 
 			scale.scale[j] = new Note(letters[i], j, chordDegree[j]); // consider making note generator method
-			i = ( i + seq[j] ) % letters.length; // incrementing by the sequence and looping back to 0
+			i = ( i + seq[j] ) % letters.length; // incrementing by the sequence interval and looping back to 0
 		}
 		return scale;
 	}
@@ -136,15 +147,6 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		}
 		
 		for(var j = 0; j <= letters.length; j++){
-			/*
-			var scaleDegree = null;
-			var degree = null;
-			if(scale.hasNote(letters[i])){
-				scaleDegree = 'Test';
-				degree = 'Test';
-			}
-			string[j] = new Note(letters[i], scaleDegree, degree);
-			*/
 			string[j] = scale.getNote(letters[i]);
 			i = (i+1) % letters.length; // incrementing by one and looping back to 0
 		}
@@ -157,7 +159,7 @@ class ScaleType { // Ex: var scaleType = new ScaleType; scaleType.generateScale(
 		var board = [];
 		
 		for(var i = 0; i < tune.length; i++){
-			board[i] = scaleType.generateString(tune[i], scale);
+			board[i] = scaleFactory.generateString(tune[i], scale);
 		}
 		return new Guitar(scale, this.tuning[tune], board);
 	}
