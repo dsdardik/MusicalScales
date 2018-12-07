@@ -108,9 +108,9 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 		};
 		this.scale = {
 			major: 			  { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
-			major_pentatonic: { sequence : [2,2,3,2,3], 	chordDegree : ['maj','min','maj','dom','min'] },
+			major_pentatonic: { sequence : [2,2,0,3,2,0,3], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
 			minor: 			  { sequence : [2,1,2,2,1,2,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] },
-			minor_pentatonic: { sequence : [2,3,2,3,2], 	chordDegree : ['min','maj','min','maj','dom'] }
+			minor_pentatonic: { sequence : [0,3,2,2,0,3,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
 		}
 		this.tuning = {
 			standard: ['E','A','D','G','B','E'],
@@ -129,11 +129,18 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 		while(letters[i] != letter && i < letters.length){ // find the starting letter's index in the array
 			i++;
 		}
+		var seqIndex = 0;
+		var seqLength = 0;
+		for(var k = 0; k < seq.length; k++){
+			if(seq[k] > 0) seqLength++;
+		}
 		
-		for(var j = 0; j < seq.length; j++){
+		for(var j = 0; j < seqLength; j++){
 
-			scale.scale[j] = new Note(letters[i], j, chordDegree[j]); // consider making note generator method
-			i = ( i + seq[j] ) % letters.length; // incrementing by the sequence interval and looping back to 0
+			scale.scale[j] = new Note(letters[i], seqIndex, chordDegree[seqIndex]); // consider making note generator method
+			seqIndex += seq[seqIndex] == 0;
+			i = ( i + seq[seqIndex] ) % letters.length; // incrementing by the sequence interval and looping back to 0
+			seqIndex++;
 		}
 		return scale;
 	}
