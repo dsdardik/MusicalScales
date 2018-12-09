@@ -108,6 +108,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 		};
 		this.scale = {
 			major: 			  { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
+			mixolydian:		  { sequence : [2,2,1,2,2,1,2], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
 			major_pentatonic: { sequence : [2,2,0,3,2,0,3], chordDegree : ['maj','min','min','maj','dom','min','dim'] },
 			minor: 			  { sequence : [2,1,2,2,1,2,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] },
 			minor_pentatonic: { sequence : [0,3,2,2,0,3,2], chordDegree : ['min','dim','maj','min','min','maj','dom'] }
