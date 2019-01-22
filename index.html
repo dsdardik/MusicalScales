@@ -41,6 +41,8 @@
 					<div class="line"></div>
 					<div class="line"></div>
 				</div>
+				<div id="staffScale">
+				</div>
 			</div>
 			<div id="guitar">
 			</div>
@@ -107,10 +109,10 @@
 					var keySignatureVal = $("#keySignature").val();
 					console.log(letter + " " + scaleTypeVal + ", " + keySignatureVal);
 					var scale = scaleFactory.generateScale(letter, scaleTypeVal, keySignatureVal);
-					
-					var html = "";
-					
+										
 					var leftLength = 10;
+					$("#staffScale").html("");
+					$("#staff .note").remove();
 					for(var i=0; i< scale.scale.length; i++){
 						var trebleNote = $("<img>",{
 										class: "note",
@@ -124,11 +126,11 @@
 						bassNote.css("padding-top","11");
 						//bassNote.css("padding-left",leftLength+"px");
 						$("#bassClef").prepend(bassNote);
+						var note = $("<span>"+scale.scale[i]+"</span>");
+						note.css("padding-left","30px");
+						$("#staffScale").append(note);
 					}
-					
-					html = "<p>"+scale.toString()+"</p>";
-					$("#guitar").html(html);
-					
+										
 					var guitar = scaleFactory.generateFretboard(scale, 'standard');
 					var board = guitar.board;
 					
