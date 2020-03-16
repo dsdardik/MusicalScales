@@ -169,7 +169,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 		for(var i = 0; i < tune.length; i++){
 			board[i] = scaleFactory.generateString(tune[i], scale);
 		}
-		return new Guitar(scale, this.tuning[tune], board);
+		return new Guitar(scale, tune, board);
 	}
 	
 }
