@@ -118,7 +118,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 			standard: ['E','A','D','G','B','E'],
 			drop_d:   ['D','A','D','G','B','E']
 		}
-		this.stringSize = [1.4, 1, .8, .4, .3, .3];
+		this.stringSize = [1.4, 1.4, .9, .7, .4, .4];
 	}
 	
 	generateScale(letter, type, keySignature){

@@ -2,7 +2,7 @@ var scaleFactory = new ScaleFactory();
 	var vue  = new Vue({
 		el: '#app',
 		data: {
-			message: 'First Vue app',
+			message: 'Musical Scales',
 			htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>',
 			letterList: scaleFactory.letters.sharps,
 			scaleList: Object.keys(scaleFactory.scale),
@@ -10,7 +10,7 @@ var scaleFactory = new ScaleFactory();
 		},
 		methods: {
 			titleMessage : function(){
-				return "Hello " + this.message;
+				return this.message;
 			}
 		},
 		components: {
@@ -106,7 +106,7 @@ var scaleFactory = new ScaleFactory();
 		html += "<div class='fretBoardBackground'></div>";
 		for(var i = board.length - 1; i >= 0 ; i--){
 			html += "<div class='guitarString "+guitar.tune[i]+"'>";
-			html += "<div class='guitarStringLine' style='border-width:"+guitar.stringSize[i]+"px;'></div>";
+			html += "<div class='guitarStringLine' style='height:"+guitar.stringSize[i]+"px;'></div>";
 			str = board[i];
 			for(var j = 0; j < str.length; j++){
 				if (i == board.length - 1){
@@ -129,7 +129,7 @@ var scaleFactory = new ScaleFactory();
 			html += "</div>";
 		}
 		html += "</div>";
-		$("#guitar").html(html);
+		$("#instrument1").html(html);
 		
 		var note;
 		var scaleDegrees = ['root', 'fifth'] // maybe change back to index
@@ -141,7 +141,7 @@ var scaleFactory = new ScaleFactory();
 			html += "<td "+attr+">"+note+": "+note.scaleDegree+"</td>";
 		}
 		html += "</tr></table></div>";
-		$("#legend").html(html);
+		//$("#legend").html(html);
 		
 		/*
 		$(".inScale span").css('color','white');
@@ -163,6 +163,9 @@ var scaleFactory = new ScaleFactory();
 			var letter = $(this).text();
 			$('.guitarNote .note:textEquals("'+letter+'")').removeClass('hovered')
 		});
+		$(".settings i").on('click', function(){
+			$(this).closest(".settings").find(".settingsModal").toggle();
+		})
 	}		
 		
 		
