@@ -28,28 +28,64 @@
 	margin-top: 5px;
 }
 
-#staff .note {
+#staff .staffNote {
 	z-index: -1;
 	position: absolute;
 	width: 14px;
 	height: 7px;
 }
 
+#staffScale {
+	margin-top: 5px;
+    margin-left: 32px;
+}
+
+#staffScale .guitarNote {
+	margin-left: 7px;
+}
+
+.fretBoard {
+	width: 500px;
+	position: relative;
+}
+
+.fretBoardBackground {
+	background-color: #78472c;
+	position: absolute;
+	height: 109px;
+	width: 500px;
+	top: 11px;
+	left: 46px;
+}
+
 .guitarString {
 	height: 22px;
 	width: 500px;
+	position: relative;
 }
 
 .guitarStringLine {
 	width: 100%;
 	height: 0px;
-	border: .3px solid black;
+	border-style: solid;
+	border-color: black;
+	background-color: black;
 	position: relative;
     top: 10px;
+	left: 44px;
+}
+
+.guitarFret {
+	width: 0px;
+	height: 109px;
+	border: 1px solid black;
+	position: absolute;
+	top: 10px;
 }
 
 .guitarNote {
 	width: 23px;
+	height: 1px;
 	margin-left: 15px;
 	float: left;
 	z-index: 50;
@@ -57,8 +93,23 @@
 }
 
 .guitarNote .note {
+	width: 20px;
+    height: 18px;
+	padding-top: 2px;
+    font-size: 90%;
+    text-align: center;
 	background-color: #bbbbbb;
-    border-radius: 11px;
+    border-radius: 30px;
+	position: absolute;
+}
+
+.guitarNote .note:hover, .guitarNote .note.hovered {
+	width: 25px;
+    height: 21px;
+	padding-top: 4px;
+	left: -2.5;
+	top: -2.5;
+	font-size: 100%;
 }
 
 .inScale .note {
@@ -66,7 +117,7 @@
 	background-color: blue;
 }
 
-.5th .note {
+.fifth .note {
 	background-color: #aa00aa !important;
 }
 
@@ -75,11 +126,6 @@
 }
 
 .note {
-	width: 20px;
-    height: 18px;
-	padding-top: 2px;
-    font-size: 1.5vmax;
-    text-align: center;
 }
 
 
