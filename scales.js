@@ -87,11 +87,11 @@ class Scale {
 
 class Guitar {
 	
-	constructor(scale, tune, board, stringSize){
+	constructor(scale, tune, board, strings){
 		this.scale = scale;
 		this.tune = tune;
 		this.board = board;
-		this.stringSize = stringSize;
+		this.strings = strings;
 	}
 	
 	numStrings(){
@@ -118,7 +118,10 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 			standard: ['E','A','D','G','B','E'],
 			drop_d:   ['D','A','D','G','B','E']
 		}
-		this.stringSize = [1.4, 1.4, .9, .7, .4, .4];
+		this.strings = {
+			size:	[2.3, 1.5, 1, 1, .6, .5],
+			color:	['#e0bd3d', '#e0bd3d', '#a36f0d', '#a36f0d', '#c2c1c0', '#c2c1c0']
+		}
 	}
 	
 	generateScale(letter, type, keySignature){
@@ -165,14 +168,14 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 	
 	generateFretboard(scale, tuneName){
 		var tune = this.tuning[tuneName];
-		var stringSize = this.stringSize;
+		var strings = this.strings;
 		var letters = this.letters[keySignature];
 		var board = [];
 		
 		for(var i = 0; i < tune.length; i++){
 			board[i] = scaleFactory.generateString(tune[i], scale);
 		}
-		return new Guitar(scale, tune, board, stringSize);
+		return new Guitar(scale, tune, board, strings);
 	}
 	
 }

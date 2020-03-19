@@ -106,23 +106,29 @@ var scaleFactory = new ScaleFactory();
 		html += "<div class='fretBoardBackground'></div>";
 		for(var i = board.length - 1; i >= 0 ; i--){
 			html += "<div class='guitarString "+guitar.tune[i]+"'>";
-			html += "<div class='guitarStringLine' style='height:"+guitar.stringSize[i]+"px;'></div>";
+			html += "<div class='guitarStringLine' style='height:"+guitar.strings.size[i]+"px; background-image: linear-gradient(#4a4a4a , "+guitar.strings.color[i]+", #4a4a4a);'></div>";
 			str = board[i];
 			for(var j = 0; j < str.length; j++){
 				if (i == board.length - 1){
 					html += "<div class='guitarFret' style='left: "+(44+j*38)+";'></div>";
+					if (j == 3 || j == 5 || j == 7 || j == 9 || j == 12){
+						html += "<img src='images/fretCircleDark.png' class='fretCircle' style='left: "+(132+(j-3)*38)+";'>";
+					}
 				}
 				var note = str[j];
-				var attr = "";
 				var classes = "guitarNote";
 				if(scale.hasNote(note.name)){
-					attr = "class='inScale " + note.scaleDegree + "'"; // add attr's too note class
 					classes += " inScale " +note.scaleDegree;
+				} else {
+					classes += " outScale";
+				}
+				if (j == 0){
+					classes += " stringNote";
 				}
 				var noteDiv = $('<div>', {
 									class: classes
 								});
-				attr = "class='"+ classes +"'";
+				var attr = "class='"+ classes +"'";
 				html += "<div "+attr+"><div class='note'>"+note+"</div></div>";
 				//html += noteDiv.html();
 			}
@@ -158,14 +164,32 @@ var scaleFactory = new ScaleFactory();
 		$('.guitarNote .note').on('mouseover', function(){
 			var letter = $(this).text();
 			$('.guitarNote .note:textEquals("'+letter+'")').addClass('hovered')
+			$('.guitarString.'+letter).find('.guitarStringLine').addClass('hovered')
 		});
 		$('.guitarNote .note').on('mouseleave', function(){
 			var letter = $(this).text();
 			$('.guitarNote .note:textEquals("'+letter+'")').removeClass('hovered')
+			$('.guitarString.'+letter).find('.guitarStringLine').removeClass('hovered')
 		});
 		$(".settings i").on('click', function(){
 			$(this).closest(".settings").find(".settingsModal").toggle();
 		})
+		$("#hideAll").on('click', function(){
+			var notes = $('#instrument1 .guitarNote:not(.stringNote) .note');
+			if (this.checked){
+				notes.hide();
+			}else{
+				notes.show();
+			}
+		});
+		$("#hideOutScale").on('click', function(){
+			var notes = $('#instrument1 .guitarNote.outScale:not(.stringNote) .note');
+			if (this.checked){
+				notes.hide();
+			}else{
+				notes.show();
+			}
+		});
 	}		
 		
 		

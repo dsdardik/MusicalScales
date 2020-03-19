@@ -85,13 +85,19 @@
     border-radius: 25px;
 }
 
-.instrumentWrapper .settings {
-	position: absolute;
-    top: 25px;
-    right: 25px;
+.instrumentWrapper .instrumentHeader {
+	position: relative;
+	margin-left: 30%;
+	margin-right: 10%;
+	padding-top: 15px;
 }
 
-.instrumentWrapper .settings i {
+.instrumentWrapper .instrumentHeader .instrumentScale {
+	float: left;
+}
+
+.instrumentWrapper .instrumentHeader i {
+	float: right;
 }
 
 .settingsModal {
@@ -99,10 +105,11 @@
     width: 650px;
     height: 200px;
     background-color: gray;
-    left: -611px;
-    top: -25px;
+    left: -195px;
+    top: 0px;
     border-radius: 25px;
     opacity: 1;
+	z-index: 100;
 }
 
 .settingsModal .modalBody {
@@ -112,8 +119,8 @@
 
 .settingsModal .modalClose {
 	position: absolute;
-    top: 25px;
-    right: 25px;
+    top: 15px;
+    right: 64px;
 }
 
 #instrument1 {
@@ -126,38 +133,47 @@
 }
 
 .fretBoardBackground {
-	background-color: #78472c;
+	background-image: url("images/guitar fretboard.jpg");
 	position: absolute;
-	height: 112px;
+	height: 120px;
 	width: 500px;
 	top: 10px;
 	left: 45px;
+	border-bottom: 1px solid black;
+    border-top: 1px solid black;
 }
 
 .guitarString {
 	height: 22px;
 	width: 500px;
 	position: relative;
+	top: 5px;
 }
 
 .guitarStringLine {
 	width: 100%;
-	border-width: .3px;
-	border-style: solid;
-	border-color: black;
-	background-color: black;
 	position: relative;
     top: 10px;
 	left: 44px;
 }
 
+.guitarStringLine:hover, .guitarStringLine.hovered {
+	border: .5px solid gold;
+}
+
 .guitarFret {
-	width: 0px;
-	height: 110px;
-	border: 1px solid black;
+	width: 2px;
+	height: 121px;
 	position: absolute;
-	top: 10px;
-	background-color: black;
+	top: 5.5px;
+	background-image: linear-gradient(to right, #999494 , #dbdbdb);
+}
+
+.fretCircle {
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	top: 58px;
 }
 
 .guitarNote {

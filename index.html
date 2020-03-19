@@ -1,7 +1,8 @@
 <html>
 	<head>
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 		<link rel="stylesheet" type="text/css" href="styles.css"></link>
+		<link rel="shortcut icon" type="image/jpg" href="images/favicon.ico"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 		<script src="https://kit.fontawesome.com/21c177d3bf.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
@@ -13,21 +14,6 @@
 			<div id="bodyContent">
 				<my-comp style="display: none;">
 				</my-comp>
-				<select id="letter">
-					<option v-for="letter in letterList">
-						{{ letter }}
-					</option>
-				</select>
-				<select id="scaleType">
-					<option v-for="scaleType in scaleList">
-						{{ scaleType }}
-					</option>
-				</select>
-				<select id="keySignature">
-					<option v-for="keySignature in keySignatureList">
-						{{ keySignature }}
-					</option>
-				</select>
 				<div id="staff">
 					<div id="trebleClef">
 						<img class="clef" src="images/TrebleClef.png">
@@ -50,29 +36,48 @@
 				</div>
 				<div class="instrumentWrapper">
 					<div class="instrumentBackground"></div>
-					<div id="instrument1"></div>
-					<div class="settings">
-						<i class="fas fa-bars"></i>
-						<div class="settingsModal" style="display: none;">
-							<div class="modalBody">
-								<div class="form-group">
-									<label for="hideOutScale">
-										<input type="checkbox" id="hideOutScale" name="hideOutScale">
-										Hide notes outside of scale
-									</label>
-									<br><br>
-									<label for="hideAll">
-										<input type="checkbox" id="hideAll" name="hideAll">
-										Hide all notes
-									</label>
-									<br><br>
+					<div class="instrumentHeader">
+						<div class="instrumentScale">
+							<select id="letter">
+								<option v-for="letter in letterList">
+									{{ letter }}
+								</option>
+							</select>
+							<select id="scaleType">
+								<option v-for="scaleType in scaleList">
+									{{ scaleType }}
+								</option>
+							</select>
+							<select id="keySignature">
+								<option v-for="keySignature in keySignatureList">
+									{{ keySignature }}
+								</option>
+							</select>
+						</div>
+						<div class="settings">
+							<i class="fas fa-bars"></i>
+							<div class="settingsModal" style="display: none;">
+								<div class="modalBody">
+									<div class="form-group">
+										<label for="hideOutScale">
+											<input type="checkbox" id="hideOutScale" name="hideOutScale">
+											Hide notes outside of scale
+										</label>
+										<br><br>
+										<label for="hideAll">
+											<input type="checkbox" id="hideAll" name="hideAll">
+											Hide all notes
+										</label>
+										<br><br>
+									</div>
 								</div>
-							</div>
-							<div class="modalClose">
-								<i class="far fa-times-circle"></i>
+								<div class="modalClose">
+									<i class="far fa-times-circle"></i>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div id="instrument1"></div>
 				</div>
 				<div id="legend">
 				</div>
