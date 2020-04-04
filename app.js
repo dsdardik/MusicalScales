@@ -174,22 +174,20 @@ var scaleFactory = new ScaleFactory();
 		$(".settings i").on('click', function(){
 			$(this).closest(".settings").find(".settingsModal").toggle();
 		})
-		$("#hideAll").on('click', function(){
+		
+		$("input[name='hideOptions']").on('click', function(){
 			var notes = $('#instrument1 .guitarNote:not(.stringNote) .note');
-			if (this.checked){
-				notes.hide();
-			}else{
+			if(this.value == 'none'){
 				notes.show();
+			} else if (this.value == 'all') {
+				notes.hide();
+			} else {
+				notes.show();
+				notes = $('#instrument1 .guitarNote.outScale:not(.stringNote) .note');
+				notes.hide();
 			}
 		});
-		$("#hideOutScale").on('click', function(){
-			var notes = $('#instrument1 .guitarNote.outScale:not(.stringNote) .note');
-			if (this.checked){
-				notes.hide();
-			}else{
-				notes.show();
-			}
-		});
+		$("#hideOutScale").click();
 	}		
 		
 		

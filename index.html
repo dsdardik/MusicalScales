@@ -59,16 +59,22 @@
 							<div class="settingsModal" style="display: none;">
 								<div class="modalBody">
 									<div class="form-group">
-										<label for="hideOutScale">
-											<input type="checkbox" id="hideOutScale" name="hideOutScale">
-											Hide notes outside of scale
+										<p>Hide Notes:</p>
+									
+										<label for="hideNone">
+											<input type="radio" id="hideNone" name="hideOptions" value="none">
+											None
 										</label>
-										<br><br>
+										<br>
 										<label for="hideAll">
-											<input type="checkbox" id="hideAll" name="hideAll">
-											Hide all notes
+											<input type="radio" id="hideAll" name="hideOptions" value="all">
+											All
 										</label>
-										<br><br>
+										<br>
+										<label for="hideOutScale">
+											<input type="radio" id="hideOutScale" name="hideOptions" value="outScale">
+											Not in scale
+										</label>
 									</div>
 								</div>
 								<div class="modalClose">
