@@ -48,6 +48,9 @@ var scaleFactory = new ScaleFactory();
 		$("#keySignature").on('change', setScale);
 		//$(".root .note").prop('style', 'background-color: black !important;')
 
+		$(".settings i").on('click', function(){
+			$(this).closest(".settings").find(".settingsModal").toggle();
+		})
 	});
 	
 	
@@ -105,14 +108,19 @@ var scaleFactory = new ScaleFactory();
 		html += "<div class='fretBoard'>";
 		html += "<div class='fretBoardBackground'></div>";
 		for(var i = board.length - 1; i >= 0 ; i--){
-			html += "<div class='guitarString "+guitar.tune[i]+"'>";
+			var dataName = convertToSafeNoteName(guitar.tune[i]);
+			html += "<div class='guitarString "+guitar.tune[i]+"' data-note='"+dataName+"'>";
 			html += "<div class='guitarStringLine' style='height:"+guitar.strings.size[i]+"px; background-image: linear-gradient(#4a4a4a , "+guitar.strings.color[i]+", #4a4a4a);'></div>";
 			str = board[i];
 			for(var j = 0; j < str.length; j++){
 				if (i == board.length - 1){
 					html += "<div class='guitarFret' style='left: "+(44+j*38)+";'></div>";
-					if (j == 3 || j == 5 || j == 7 || j == 9 || j == 12){
-						html += "<img src='images/fretCircleDark.png' class='fretCircle' style='left: "+(132+(j-3)*38)+";'>";
+					if (j == 3 || j == 5 || j == 7 || j == 9){
+						//html += "<img src='images/fretCircleDark.png' class='fretCircle' style='left: "+(132+(j-3)*38)+";'>";
+						html += "<div class='fretCircle' style='left: "+(134+(j-3)*38)+";'></div>";
+					} else if (j == 12){
+						html += "<div class='fretCircle' style='top: 35px; left: 477px;'></div>";
+						html += "<div class='fretCircle' style='top: 86px; left: 477px;'></div>";
 					}
 				}
 				var note = str[j];
@@ -129,7 +137,8 @@ var scaleFactory = new ScaleFactory();
 									class: classes
 								});
 				var attr = "class='"+ classes +"'";
-				html += "<div "+attr+"><div class='note'>"+note+"</div></div>";
+				var dataName = convertToSafeNoteName(note.name);
+				html += "<div "+attr+"><div class='note' data-note='"+dataName+"'>"+note.name+"</div></div>";
 				//html += noteDiv.html();
 			}
 			html += "</div>";
@@ -158,22 +167,30 @@ var scaleFactory = new ScaleFactory();
 		
 		setScaleProperties();
 	}
+	
+	function convertToSafeNoteName(name){
+		if (name.length == 2) {
+			if (name.includes("#")){
+				name = name.substr(0,1) + "s";
+			} else {
+				name = name.substr(0,1) + "f";
+			}
+		}
+		return name;
+	}
 		
 	function setScaleProperties(){
 
 		$('.guitarNote .note').on('mouseover', function(){
-			var letter = $(this).text();
-			$('.guitarNote .note:textEquals("'+letter+'")').addClass('hovered')
-			$('.guitarString.'+letter).find('.guitarStringLine').addClass('hovered')
+			var letter = $(this).data('note');
+			$('.guitarNote .note[data-note="'+letter+'"]').addClass('hovered')
+			$('.guitarString[data-note="'+letter+'"]').find('.guitarStringLine').addClass('hovered')
 		});
 		$('.guitarNote .note').on('mouseleave', function(){
-			var letter = $(this).text();
-			$('.guitarNote .note:textEquals("'+letter+'")').removeClass('hovered')
-			$('.guitarString.'+letter).find('.guitarStringLine').removeClass('hovered')
+			var letter = $(this).data('note');
+			$('.guitarNote .note[data-note="'+letter+'"]').removeClass('hovered')
+			$('.guitarString[data-note="'+letter+'"]').find('.guitarStringLine').removeClass('hovered')
 		});
-		$(".settings i").on('click', function(){
-			$(this).closest(".settings").find(".settingsModal").toggle();
-		})
 		
 		$("input[name='hideOptions']").on('click', function(){
 			var notes = $('#instrument1 .guitarNote:not(.stringNote) .note');

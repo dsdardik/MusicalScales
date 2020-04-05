@@ -44,8 +44,8 @@
 								</option>
 							</select>
 							<select id="scaleType">
-								<option v-for="scaleType in scaleList">
-									{{ scaleType }}
+								<option v-for="scaleType in scaleList" v-bind:value="scaleType">
+									{{ scaleType.replace("_", " ") }}
 								</option>
 							</select>
 							<select id="keySignature">
