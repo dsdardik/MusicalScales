@@ -51,6 +51,24 @@ var scaleFactory = new ScaleFactory();
 		$(".settings i").on('click', function(){
 			$(this).closest(".settings").find(".settingsModal").toggle();
 		})
+		$('.sliderDropdown').on('click', function(){
+			if ($(this).data('toggle') == 'open'){
+				$('#trebleClef, #bassClef').fadeOut(1000);
+				$('.instrumentAux').animate({
+					height: "35px"
+				}, 1000);
+				$('.sliderDropdown').css('margin-top','7px');
+				$(this).data('toggle', 'closed');
+			} else {
+				$('#trebleClef, #bassClef').fadeIn(1000);
+				$('.instrumentAux').animate({
+					height: "120px"
+				}, 1000);
+				$('.sliderDropdown').css('margin-top','12px');
+				$(this).data('toggle', 'open');
+			}
+			$('.sliderDropdown .close, .sliderDropdown .open').toggle();
+		});
 	});
 	
 	
@@ -110,7 +128,8 @@ var scaleFactory = new ScaleFactory();
 		}
 		html += "</table>";
 		
-		html = "<br /><br />";
+		html = "<br />";
+		html += "<div class='fretBoardWrapper'>";
 		html += "<div class='fretBoard'>";
 		html += "<div class='fretBoardBackground'></div>";
 		for(var i = board.length - 1; i >= 0 ; i--){
@@ -149,7 +168,7 @@ var scaleFactory = new ScaleFactory();
 			}
 			html += "</div>";
 		}
-		html += "</div>";
+		html += "</div></div>";
 		$("#instrument1").html(html);
 		
 		var note;
