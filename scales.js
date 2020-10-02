@@ -2,6 +2,15 @@ class Note {
 	
 	constructor(name, scaleIndex, chordDegree){
 		this.name = name;
+		this.baseNote = name.substring(0, 1);
+		var accidentalSymbol = name.substring(1, 2);
+		if (accidentalSymbol == "#"){
+			this.accidental = "Sharp";
+		} else if (accidentalSymbol == "b") {
+			this.accidental = "Flat";
+		} else {
+			this.accidental = "";
+		}
 		this.chordDegree = chordDegree;
 		
 		var degree;
@@ -104,6 +113,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 	constructor(){
 		
 		this.letters = {
+			labels: ['A','A#/Bb','B','C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab'],
 			sharps: ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'],
 			flats:  ['A','Bb','B','C','Db','D','Eb','E','F','Gb','G','Ab']
 		};
@@ -124,8 +134,8 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 		}
 	}
 	
-	generateScale(letter, type, keySignature){
-		var letters = this.letters[keySignature];
+	generateScale(letter, type, accidentalType){
+		var letters = this.letters[accidentalType];
 		var scale = new Scale(letter, type, letters) // eventually change to an array of scales if multiple provided
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
@@ -169,7 +179,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 	generateFretboard(scale, tuneName){
 		var tune = this.tuning[tuneName];
 		var strings = this.strings;
-		var letters = this.letters[keySignature];
+		var letters = this.letters[accidentalType];
 		var board = [];
 		
 		for(var i = 0; i < tune.length; i++){

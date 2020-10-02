@@ -39,7 +39,7 @@
 					<div class="instrumentHeader">
 						<div class="instrumentScale">
 							<select id="letter">
-								<option v-for="letter in letterList">
+								<option v-for="(letter, index) in letterList" v-bind:value="index">
 									{{ letter }}
 								</option>
 							</select>
@@ -48,9 +48,9 @@
 									{{ scaleType.replace("_", " ") }}
 								</option>
 							</select>
-							<select id="keySignature">
-								<option v-for="keySignature in keySignatureList">
-									{{ keySignature }}
+							<select id="accidentalType">
+								<option v-for="accidentalType in accidentalTypeList" v-if="accidentalType != 'labels'">
+									{{ accidentalType }}
 								</option>
 							</select>
 						</div>

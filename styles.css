@@ -45,6 +45,50 @@
 	padding-left: 4px;
 }
 
+#trebleClef .staffNote.A{
+	padding-top: 17px !important;
+}
+#trebleClef .staffNote.b{
+	padding-top: 14px !important;
+}
+#trebleClef .staffNote.C{
+	padding-top: 11px !important;
+}
+#trebleClef .staffNote.D{
+	padding-top: 8px !important;
+}
+#trebleClef .staffNote.E{
+	padding-top: 5px !important;
+}
+#trebleClef .staffNote.F{
+	padding-top: 2px !important;
+}
+#trebleClef .staffNote.G{
+	padding-top: -1px !important;
+}
+
+#bassClef .staffNote.A{
+	padding-top: 23px !important;
+}
+#bassClef .staffNote.b{
+	padding-top: 20px !important;
+}
+#bassClef .staffNote.C{
+	padding-top: 17px !important;
+}
+#bassClef .staffNote.D{
+	padding-top: 14px !important;
+}
+#bassClef .staffNote.E{
+	padding-top: 11px !important;
+}
+#bassClef .staffNote.F{
+	padding-top: 8px !important;
+}
+#bassClef .staffNote.G{
+	padding-top: 5px !important;
+}
+
 #staff .line {
 	background-color: #000000;
 	width: 250px;
@@ -53,7 +97,6 @@
 }
 
 #staff .staffNote {
-	z-index: -1;
 	position: absolute;
 	width: 14px;
 	height: 7px;

@@ -4,9 +4,9 @@ var scaleFactory = new ScaleFactory();
 		data: {
 			message: 'Musical Scales',
 			htmlContent: '<p>Scale:</p><select><option value="">Select</option></select>',
-			letterList: scaleFactory.letters.sharps,
+			letterList: scaleFactory.letters.labels,
 			scaleList: Object.keys(scaleFactory.scale),
-			keySignatureList: Object.keys(scaleFactory.letters)
+			accidentalTypeList: Object.keys(scaleFactory.letters)
 		},
 		methods: {
 			titleMessage : function(){
@@ -45,7 +45,7 @@ var scaleFactory = new ScaleFactory();
 		setScale();
 		$("#letter").on('change', setScale);
 		$("#scaleType").on('change', setScale);
-		$("#keySignature").on('change', setScale);
+		$("#accidentalType").on('change', setScale);
 		//$(".root .note").prop('style', 'background-color: black !important;')
 
 		$(".settings i").on('click', function(){
@@ -56,18 +56,24 @@ var scaleFactory = new ScaleFactory();
 	
 	function setScale(){
 		
-		var letter = $("#letter").val();
 		var scaleTypeVal = $("#scaleType").val();
-		var keySignatureVal = $("#keySignature").val();
-		console.log(letter + " " + scaleTypeVal + ", " + keySignatureVal);
-		var scale = scaleFactory.generateScale(letter, scaleTypeVal, keySignatureVal);
+		var accidentalTypeVal = $("#accidentalType").val();
+		var letterIndex = $("#letter").val();
+		var letter = "";
+		if ( accidentalTypeVal == "sharps"){
+			letter = scaleFactory.letters.sharps[letterIndex];
+		} else {
+			letter = scaleFactory.letters.flats[letterIndex];
+		}
+		console.log(letter + " " + scaleTypeVal + ", " + accidentalTypeVal);
+		var scale = scaleFactory.generateScale(letter, scaleTypeVal, accidentalTypeVal);
 							
 		var leftLength = 10;
 		$("#staffScale").html("");
-		$("#staff .note").remove();
-		for(var i=0; i< scale.scale.length; i++){
+		$("#staff .staffNote").remove();
+		for(var i=0; i < scale.scale.length; i++){
 			var trebleNote = $("<img>",{
-								class: "staffNote",
+								class: "staffNote " + scale.scale[i].baseNote + " " + scale.scale[i].accidental,
 								src: "images/WholeNote.png"
 							});
 			leftLength += 30;
