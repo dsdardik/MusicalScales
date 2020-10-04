@@ -42,10 +42,11 @@ var scaleFactory = new ScaleFactory();
 			return $(a).text().match("^" + textToFind + "$");
 		}; 
 		
-		setScale();
-		$("#letter").on('change', setScale);
-		$("#scaleType").on('change', setScale);
-		$("#accidentalType").on('change', setScale);
+		var instrument1 = $('#instrument1');
+		setScale(instrument1);
+		$(".letter").on('change', setScale);
+		$(".scaleType").on('change', setScale);
+		$(".accidentalType").on('change', setScale);
 		//$(".root .note").prop('style', 'background-color: black !important;')
 
 		$(".settings i").on('click', function(){
@@ -53,14 +54,14 @@ var scaleFactory = new ScaleFactory();
 		})
 		$('.sliderDropdown').on('click', function(){
 			if ($(this).data('toggle') == 'open'){
-				$('#trebleClef, #bassClef').fadeOut(1000);
+				$('.trebleClef, .bassClef').fadeOut(1000);
 				$('.instrumentAux').animate({
 					height: "35px"
 				}, 1000);
 				$('.sliderDropdown').css('margin-top','7px');
 				$(this).data('toggle', 'closed');
 			} else {
-				$('#trebleClef, #bassClef').fadeIn(1000);
+				$('.trebleClef, .bassClef').fadeIn(1000);
 				$('.instrumentAux').animate({
 					height: "120px"
 				}, 1000);
@@ -72,11 +73,11 @@ var scaleFactory = new ScaleFactory();
 	});
 	
 	
-	function setScale(){
+	function setScale(instrumentElement){
 		
-		var scaleTypeVal = $("#scaleType").val();
-		var accidentalTypeVal = $("#accidentalType").val();
-		var letterIndex = $("#letter").val();
+		var scaleTypeVal = instrumentElement.find(".scaleType").val();
+		var accidentalTypeVal = instrumentElement.find(".accidentalType").val();
+		var letterIndex = instrumentElement.find(".letter").val();
 		var letter = "";
 		if ( accidentalTypeVal == "sharps"){
 			letter = scaleFactory.letters.sharps[letterIndex];
@@ -87,8 +88,8 @@ var scaleFactory = new ScaleFactory();
 		var scale = scaleFactory.generateScale(letter, scaleTypeVal, accidentalTypeVal);
 							
 		var leftLength = 10;
-		$("#staffScale").html("");
-		$("#staff .staffNote").remove();
+		instrumentElement.find(".staffScale").html("");
+		instrumentElement.find(".staff .staffNote").remove();
 		for(var i=0; i < scale.scale.length; i++){
 			var trebleNote = $("<img>",{
 								class: "staffNote " + scale.scale[i].baseNote + " " + scale.scale[i].accidental,
@@ -97,15 +98,15 @@ var scaleFactory = new ScaleFactory();
 			leftLength += 30;
 			trebleNote.css("padding-top","20");
 			trebleNote.css("padding-left",leftLength+"px");
-			$("#trebleClef").prepend(trebleNote);
+			instrumentElement.find(".trebleClef").prepend(trebleNote);
 			var bassNote = trebleNote.clone();
 			bassNote.css("padding-top","11");
 			//bassNote.css("padding-left",leftLength+"px");
-			$("#bassClef").prepend(bassNote);
+			instrumentElement.find(".bassClef").prepend(bassNote);
 			var note = $("<div class='guitarNote inScale "+scale.scale[i].scaleDegree+"'><div class='note'>"+scale.scale[i]+"</div></div>");
 			//var note = $("<span>"+scale.scale[i]+"</span>");
 			//note.css("padding-left","30px");
-			$("#staffScale").append(note);
+			instrumentElement.find(".staffScale").append(note);
 		}
 							
 		var guitar = scaleFactory.generateFretboard(scale, 'standard');
@@ -152,7 +153,7 @@ var scaleFactory = new ScaleFactory();
 			html += "</div>";
 		}
 		html += "</div></div>";
-		$("#instrument1").html(html);
+		instrumentElement.find(".instrumentBody").html(html);
 		
 		var note;
 		var scaleDegrees = ['root', 'fifth'] // maybe change back to index
@@ -212,11 +213,14 @@ var scaleFactory = new ScaleFactory();
 				notes.hide();
 			}
 		});
-		$("#hideOutScale").click();
+		$(".hideOutScale").click();
 	}		
 		
 		
+	function addInstrument(){
 		
+		
+	}
 		
 		
 		

@@ -54,11 +54,12 @@ class Note {
 
 class Scale {
 	
-	constructor(letter, type, letters){
+	constructor(letter, type, letters, accidentalType){
 		this.name = letter + type;
 		this.letter = letter;
 		this.type = type;
 		this.letters = letters;
+		this.accidentalType = accidentalType;
 		this.scale = [];
 	}
 	
@@ -136,7 +137,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 	
 	generateScale(letter, type, accidentalType){
 		var letters = this.letters[accidentalType];
-		var scale = new Scale(letter, type, letters) // eventually change to an array of scales if multiple provided
+		var scale = new Scale(letter, type, letters, accidentalType) // eventually change to an array of scales if multiple provided
 		var seq = this.scale[type].sequence;
 		var chordDegree = this.scale[type].chordDegree;
 		var scaleLength;
@@ -179,7 +180,7 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 	generateFretboard(scale, tuneName){
 		var tune = this.tuning[tuneName];
 		var strings = this.strings;
-		var letters = this.letters[accidentalType];
+		var letters = this.letters[scale.accidentalType];
 		var board = [];
 		
 		for(var i = 0; i < tune.length; i++){

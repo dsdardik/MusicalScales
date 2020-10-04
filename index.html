@@ -14,81 +14,92 @@
 			<div id="bodyContent">
 				<my-comp style="display: none;">
 				</my-comp>
-				<div class="instrumentWrapper">
-					<div class="instrumentAux">
-						<div id="staff">
-							<div id="trebleClef">
-								<img class="clef" src="images/TrebleClef.png">
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
+
+				<div id="instrument1" class="instrument" data-instrumentNum="1">
+				
+					<div class="instrumentWrapper">
+						<div class="instrumentAux">
+							<div class="staff">
+								<div class="trebleClef">
+									<img class="clef" src="images/TrebleClef.png">
+									<div class="line"></div>
+									<div class="line"></div>
+									<div class="line"></div>
+									<div class="line"></div>
+									<div class="line"></div>
+								</div>
+								<div class="bassClef">
+									<img class="clef" src="images/BassClef.png">
+									<div class="line"></div>
+									<div class="line"></div>
+									<div class="line"></div>
+									<div class="line"></div>
+									<div class="line"></div>
+								</div>
+								<div class="staffScale"></div>
 							</div>
-							<div id="bassClef">
-								<img class="clef" src="images/BassClef.png">
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
+							<div class="sliderDropdown" data-toggle="open">
+								<i class="close fas fa-caret-down"></i>
+								<i class="open fas fa-caret-up" style="display: none;"></i>
 							</div>
-							<div id="staffScale"></div>
 						</div>
-						<div class="sliderDropdown" data-toggle="open">
-							<i class="close fas fa-caret-down"></i>
-							<i class="open fas fa-caret-up" style="display: none;"></i>
-						</div>
-					</div>
-					<div class="instrumentBackground"></div>
-					<div class="instrumentHeader">
-						<div class="instrumentScale">
-							<select id="letter">
-								<option v-for="(letter, index) in letterList" v-bind:value="index">
-									{{ letter }}
-								</option>
-							</select>
-							<select id="scaleType">
-								<option v-for="scaleType in scaleList" v-bind:value="scaleType">
-									{{ scaleType.replace("_", " ") }}
-								</option>
-							</select>
-							<select id="accidentalType">
-								<option v-for="accidentalType in accidentalTypeList" v-if="accidentalType != 'labels'">
-									{{ accidentalType }}
-								</option>
-							</select>
-						</div>
-						<div class="settings">
-							<i class="fas fa-bars"></i>
-							<div class="settingsModal" style="display: none;">
-								<div class="modalBody">
-									<div class="form-group">
-										<p>Hide Notes:</p>
-									
-										<label for="hideNone">
-											<input type="radio" id="hideNone" name="hideOptions" value="none">
-											None
-										</label>
-										<br>
-										<label for="hideAll">
-											<input type="radio" id="hideAll" name="hideOptions" value="all">
-											All
-										</label>
-										<br>
-										<label for="hideOutScale">
-											<input type="radio" id="hideOutScale" name="hideOptions" value="outScale">
-											Not in scale
-										</label>
+						<div class="instrumentBackground"></div>
+						<div class="instrumentHeader">
+							<div class="instrumentScale">
+								<select class="letter">
+									<option v-for="(letter, index) in letterList" v-bind:value="index">
+										{{ letter }}
+									</option>
+								</select>
+								<select class="scaleType">
+									<option v-for="scaleType in scaleList" v-bind:value="scaleType">
+										{{ scaleType.replace("_", " ") }}
+									</option>
+								</select>
+								<select class="accidentalType">
+									<option v-for="accidentalType in accidentalTypeList" v-if="accidentalType != 'labels'">
+										{{ accidentalType }}
+									</option>
+								</select>
+							</div>
+							<div class="settings">
+								<i class="fas fa-bars"></i>
+								<div class="settingsModal" style="display: none;">
+									<div class="modalBody">
+										<div class="form-group">
+											<p>Hide Notes:</p>
+										
+											<label for="hideNone">
+												<input type="radio" class="hideNone" name="hideOptions" value="none">
+												None
+											</label>
+											<br>
+											<label for="hideAll">
+												<input type="radio" class="hideAll" name="hideOptions" value="all">
+												All
+											</label>
+											<br>
+											<label for="hideOutScale">
+												<input type="radio" class="hideOutScale" name="hideOptions" value="outScale">
+												Not in scale
+											</label>
+										</div>
+									</div>
+									<div class="modalClose">
+										<i class="far fa-times-circle"></i>
 									</div>
 								</div>
-								<div class="modalClose">
-									<i class="far fa-times-circle"></i>
-								</div>
 							</div>
+							<div class="instrumentBody"></div>
 						</div>
 					</div>
-					<div id="instrument1"></div>
+				
+				</div>
+				<div id="instrument2"></div>
+				<br />
+				<br />
+				<div id="instrumentAdder">
+					<div class=buttonWrapper><button>Add Instrument</button></div>
 				</div>
 				<div id="legend">
 				</div>
