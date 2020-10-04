@@ -4,7 +4,7 @@ class Note {
 		this.name = name;
 		this.baseNote = name.substring(0, 1);
 		var accidentalSymbol = name.substring(1, 2);
-		if (accidentalSymbol == "#"){
+		if (accidentalSymbol == "\u266F"){
 			this.accidental = "Sharp";
 		} else if (accidentalSymbol == "b") {
 			this.accidental = "Flat";
@@ -113,9 +113,9 @@ class ScaleFactory { // Ex: var ScaleFactory = new ScaleFactory; ScaleFactory.ge
 	constructor(){
 		
 		this.letters = {
-			labels: ['A','A#/Bb','B','C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab'],
-			sharps: ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'],
-			flats:  ['A','Bb','B','C','Db','D','Eb','E','F','Gb','G','Ab']
+			labels: ['A','A\u266F/B\u266D','B','C','C\u266F/D\u266D','D','D\u266F/E\u266D','E','F','F\u266F/G\u266D','G','G\u266F/A\u266D'],
+			sharps: ['A','A\u266F','B','C','C\u266F','D','D\u266F','E','F','F\u266F','G','G\u266F'],
+			flats:  ['A','B\u266D','B','C','D\u266D','D','E\u266D','E','F','G\u266D','G','A\u266D']
 		};
 		this.scale = {
 			major: 			  { sequence : [2,2,1,2,2,2,1], chordDegree : ['maj','min','min','maj','dom','min','dim'] },

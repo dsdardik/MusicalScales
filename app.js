@@ -111,24 +111,7 @@ var scaleFactory = new ScaleFactory();
 		var guitar = scaleFactory.generateFretboard(scale, 'standard');
 		var board = guitar.board;
 		
-		var html = "<br /><br />";
-		html += "<table border='1'>";
-		for(var i = board.length - 1; i >= 0 ; i--){
-			html += "<tr>";
-			str = board[i];
-			for(var j = 0; j < str.length; j++){
-				var note = str[j];
-				var attr = "";
-				if(scale.hasNote(note.name)){
-					attr = "class='inScale " + note.scaleDegree + "'"; // add attr's too note class
-				}
-				html += "<td "+attr+">"+note+"</td>";
-			}
-			html += "</tr>";
-		}
-		html += "</table>";
-		
-		html = "<br />";
+		var html = "<br />";
 		html += "<div class='fretBoardWrapper'>";
 		html += "<div class='fretBoard'>";
 		html += "<div class='fretBoardBackground'></div>";
@@ -163,7 +146,7 @@ var scaleFactory = new ScaleFactory();
 								});
 				var attr = "class='"+ classes +"'";
 				var dataName = convertToSafeNoteName(note.name);
-				html += "<div "+attr+"><div class='note' data-note='"+dataName+"'>"+note.name+"</div></div>";
+				html += "<div "+attr+"><div class='note' data-note='"+dataName+"'><span>"+note.name+"</span></div></div>";
 				//html += noteDiv.html();
 			}
 			html += "</div>";
